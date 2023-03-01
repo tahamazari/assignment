@@ -1,24 +1,29 @@
-import logo from './logo.svg';
+import { MetaMaskProvider } from "metamask-react";
+
 import './App.css';
+import ConnectWallet from './modules/ConnectWallet';
+import MetaMaskLogo from "./assets/MetaMaskLogo"
+import { DarkModeButton } from "./components";
 
 function App() {
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MetaMaskProvider>
+      <div className="App relative dark:bg-slate-800 w-full dark:text-white bg-white h-screen flex flex-col">
+        <MetaMaskLogo />
+        {
+          window.ethereum ? 
+          <ConnectWallet /> :
+          "Download Metamask extension"
+        }
+      </div>
+      <DarkModeButton />
+    </MetaMaskProvider>
   );
 }
 

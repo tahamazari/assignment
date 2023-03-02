@@ -50,23 +50,6 @@ const ConnectWallet = () => {
   const { status, connect, account, chainId } = useMetaMask();
   const balance = useGetEthereumBalance()
 
-  // Check if MetaMask is installed and connected
-if (window.ethereum && window.ethereum.isConnected()) {
-  // Request access to the user's accounts
-  const requestAccountsPromise = window.ethereum.request({ method: 'eth_requestAccounts' });
-
-  // Wait for the request to complete
-  requestAccountsPromise.then((accounts) => {
-    // Do something with the accounts
-    console.log('Accounts:', accounts);
-  }).catch((error) => {
-    // Handle errors
-    console.error('Error:', error);
-  });
-} else {
-  console.error('MetaMask is not installed or not connected');
-}
-
   const statusMessage = getStatus({ status, account, chainId, balance, connect })
 
   return(
